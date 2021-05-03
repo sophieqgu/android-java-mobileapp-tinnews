@@ -43,5 +43,7 @@ dependencies {
     implementation 'androidx.navigation:navigation-ui:2.2.1'
     implementation 'com.squareup.retrofit2:converter-gson:2.8.1'
     implementation 'com.squareup.retrofit2:retrofit:2.8.1'
+    debugImplementation 'com.ashokvarma.android:gander-imdb:3.1.0'
+    releaseImplementation 'com.ashokvarma.android:gander-no-op:3.1.0'
 
 }
