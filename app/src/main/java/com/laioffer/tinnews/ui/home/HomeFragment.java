@@ -26,20 +26,27 @@ public class HomeFragment extends Fragment {
     }
 
     @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
         NewsRepository repository = new NewsRepository(getContext());
-        viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository)).get(HomeViewModel.class);
+        viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository))
+                .get(HomeViewModel.class);
         viewModel.setCountryInput("us");
-        viewModel.getTopHeadlines()
-                . observe(
+        viewModel
+                .getTopHeadlines()
+                .observe(
                         getViewLifecycleOwner(),
                         newsResponse -> {
                             if (newsResponse != null) {
                                 Log.d("HomeFragment", newsResponse.toString());
                             }
-                        }
-                );
+                        });
+
     }
 }

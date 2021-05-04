@@ -9,6 +9,7 @@ import com.laioffer.tinnews.model.NewsResponse;
 import com.laioffer.tinnews.repository.NewsRepository;
 
 public class HomeViewModel extends ViewModel {
+
     private final NewsRepository repository;
     private final MutableLiveData<String> countryInput = new MutableLiveData<>();
 
@@ -24,3 +25,4 @@ public class HomeViewModel extends ViewModel {
         return Transformations.switchMap(countryInput, repository::getTopHeadlines);
     }
 }
+

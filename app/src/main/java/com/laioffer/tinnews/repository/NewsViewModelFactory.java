@@ -8,6 +8,7 @@ import com.laioffer.tinnews.ui.home.HomeViewModel;
 import com.laioffer.tinnews.ui.search.SearchViewModel;
 
 public class NewsViewModelFactory implements ViewModelProvider.Factory {
+
     private final NewsRepository repository;
 
     public NewsViewModelFactory(NewsRepository repository) {
@@ -24,6 +25,5 @@ public class NewsViewModelFactory implements ViewModelProvider.Factory {
         } else {
             throw new IllegalStateException("Unknown ViewModel");
         }
-
     }
 }

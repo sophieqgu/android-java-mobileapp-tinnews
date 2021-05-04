@@ -24,23 +24,21 @@ public class NewsRepository {
     public LiveData<NewsResponse> getTopHeadlines(String country) {
         MutableLiveData<NewsResponse> topHeadlinesLiveData = new MutableLiveData<>();
         newsApi.getTopHeadlines(country)
-                .enqueue(
-                    new Callback<NewsResponse>() {
-                        @Override
-                        public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                            if (response.isSuccessful()) {
-                                topHeadlinesLiveData.setValue(response.body());
-                            } else {
-                                topHeadlinesLiveData.setValue(null);
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<NewsResponse> call, Throwable t) {
+                .enqueue(new Callback<NewsResponse>() {
+                    @Override
+                    public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                        if (response.isSuccessful()) {
+                            topHeadlinesLiveData.setValue(response.body());
+                        } else {
                             topHeadlinesLiveData.setValue(null);
                         }
                     }
-                );
+
+                    @Override
+                    public void onFailure(Call<NewsResponse> call, Throwable t) {
+                        topHeadlinesLiveData.setValue(null);
+                    }
+                });
         return topHeadlinesLiveData;
     }
 
@@ -48,22 +46,21 @@ public class NewsRepository {
         MutableLiveData<NewsResponse> everyThingLiveData = new MutableLiveData<>();
         newsApi.getEverything(query, 40)
                 .enqueue(
-                    new Callback<NewsResponse>() {
-                        @Override
-                        public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
-                            if (response.isSuccessful()) {
-                                everyThingLiveData.setValue(response.body());
-                            } else {
+                        new Callback<NewsResponse>() {
+                            @Override
+                            public void onResponse(Call<NewsResponse> call, Response<NewsResponse> response) {
+                                if (response.isSuccessful()) {
+                                    everyThingLiveData.setValue(response.body());
+                                } else {
+                                    everyThingLiveData.setValue(null);
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<NewsResponse> call, Throwable t) {
                                 everyThingLiveData.setValue(null);
                             }
-                        }
-
-                        @Override
-                        public void onFailure(Call<NewsResponse> call, Throwable t) {
-                            everyThingLiveData.setValue(null);
-                        }
-                    }
-                );
+                        });
         return everyThingLiveData;
     }
 
