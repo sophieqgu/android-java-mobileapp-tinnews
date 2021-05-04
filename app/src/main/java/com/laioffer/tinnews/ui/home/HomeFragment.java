@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.laioffer.tinnews.R;
+import com.laioffer.tinnews.databinding.FragmentHomeBinding;
 import com.laioffer.tinnews.repository.NewsRepository;
 import com.laioffer.tinnews.repository.NewsViewModelFactory;
 
@@ -20,6 +21,8 @@ import com.laioffer.tinnews.repository.NewsViewModelFactory;
 public class HomeFragment extends Fragment {
 
     private HomeViewModel viewModel;
+    private FragmentHomeBinding binding;
+
 
     public HomeFragment() {
         // Required empty public constructor
@@ -27,7 +30,8 @@ public class HomeFragment extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_home, container, false);
+        binding = FragmentHomeBinding.inflate(inflater, container, false);
+        return binding.getRoot();
     }
 
     @Override
