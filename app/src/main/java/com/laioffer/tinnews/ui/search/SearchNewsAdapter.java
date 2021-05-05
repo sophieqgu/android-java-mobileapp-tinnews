@@ -27,6 +27,12 @@ public class SearchNewsAdapter extends RecyclerView.Adapter<SearchNewsAdapter.Se
         return new SearchNewsViewHolder(view);
     }
 
+    public void setArticles(List<Article> newsList) {
+        this.articles.clear();
+        this.articles.addAll(newsList);
+        notifyDataSetChanged();
+    }
+
     @Override
     public void onBindViewHolder(@Nonnull SearchNewsViewHolder holder, int position) {
         Article article = articles.get(position);
