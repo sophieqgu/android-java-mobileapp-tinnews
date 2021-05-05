@@ -1,16 +1,26 @@
 package com.laioffer.tinnews.model;
 
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
+
 import java.util.Objects;
 
+import javax.annotation.Nonnull;
+
 public class Article {
+    @Ignore
     public Source source;
     public String author;
     public String content;
     public String description;
     public String publishedAt;
     public String title;
+
+    @Nonnull
+    @PrimaryKey
     public String url;
     public String urlToImage;
+    public boolean favorite;
 
 
     @Override
