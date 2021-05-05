@@ -41,6 +41,14 @@ public class SearchFragment extends Fragment {
 
         SearchNewsAdapter newsAdapter = new SearchNewsAdapter();
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
+        gridLayoutManager.setSpanSizeLookup(
+                new GridLayoutManager.SpanSizeLookup() {
+                    @Override
+                    public int getSpanSize(int position) {
+                        return position == 0 ? 2 : 1;
+                    }
+                }
+        );
         binding.recyclerView.setLayoutManager(gridLayoutManager);
         binding.recyclerView.setAdapter(newsAdapter);
 
