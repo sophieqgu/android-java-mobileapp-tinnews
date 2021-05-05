@@ -1,12 +1,11 @@
 package com.laioffer.tinnews.model;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Objects;
-
-import javax.annotation.Nonnull;
 
 @Entity
 public class Article {
@@ -18,7 +17,7 @@ public class Article {
     public String publishedAt;
     public String title;
 
-    @Nonnull
+    @NonNull
     @PrimaryKey
     public String url;
     public String urlToImage;

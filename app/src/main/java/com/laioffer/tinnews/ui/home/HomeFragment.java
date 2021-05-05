@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.databinding.FragmentHomeBinding;
@@ -68,6 +69,17 @@ public class HomeFragment extends Fragment implements TinNewsCard.OnSwipeListene
 
                             }
                         });
+        viewModel.onFavorite()
+                .observe(
+                        getViewLifecycleOwner(),
+                        isSuccess -> {
+                            if (isSuccess) {
+                                Toast.makeText(getContext(), "Success", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getContext(), "You might have liked before", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                );
 
     }
 
