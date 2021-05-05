@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 
 import com.laioffer.tinnews.R;
 import com.laioffer.tinnews.databinding.FragmentSearchBinding;
@@ -36,11 +37,21 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        binding.searchView.setOnEditorActionListener(
+                (v, actionId, event) -> {
+                    String searchText = binding.searchView.getText().toString();
+                    if (actionId == EditorInfo.IME_ACTION_DONE && !searchText.isEmpty()) {
+                        viewModel.setSearchInput(searchText);
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+        );
 
         NewsRepository repository = new NewsRepository(getContext());
         viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository))
                 .get(SearchViewModel.class);
-        viewModel.setSearchInput("Covid-19");
         viewModel
                 .searchNews()
                 .observe(
