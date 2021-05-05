@@ -23,6 +23,10 @@ public class HomeViewModel extends ViewModel {
         countryInput.setValue(country);
     }
 
+    public void setFavoriteArticleInput(Article article) {
+        favoriteArticleInput.setValue(article);
+    }
+
     public LiveData<NewsResponse> getTopHeadlines() {
         return Transformations.switchMap(countryInput, repository::getTopHeadlines);
     }

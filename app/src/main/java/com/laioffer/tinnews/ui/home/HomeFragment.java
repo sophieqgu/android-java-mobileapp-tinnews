@@ -20,7 +20,7 @@ import com.laioffer.tinnews.repository.NewsViewModelFactory;
 import com.mindorks.placeholderview.SwipeDecor;
 
 
-public class HomeFragment extends Fragment {
+public class HomeFragment extends Fragment implements TinNewsCard.OnSwipeListener {
 
     private HomeViewModel viewModel;
     private FragmentHomeBinding binding;
@@ -62,7 +62,7 @@ public class HomeFragment extends Fragment {
                         newsResponse -> {
                             if (newsResponse != null) {
                                 for (Article article : newsResponse.articles) {
-                                    TinNewsCard tinNewsCard = new TinNewsCard(article);
+                                    TinNewsCard tinNewsCard = new TinNewsCard(article, this);
                                     binding.swipeView.addView(tinNewsCard);
                                 }
 
@@ -70,4 +70,24 @@ public class HomeFragment extends Fragment {
                         });
 
     }
+
+    @Override
+    public void onLike(Article article) {
+        viewModel.setFavoriteArticleInput(article);
+    }
+
+    @Override
+    public void onDisLike(Article news) {
+        if (binding.swipeView.getChildCount() > 3) {
+            viewModel.setCountryInput("us");
+        }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        viewModel.onCancel();
+    }
+
+
 }
