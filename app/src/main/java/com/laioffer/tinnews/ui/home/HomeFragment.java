@@ -89,7 +89,7 @@ public class HomeFragment extends Fragment implements TinNewsCard.OnSwipeListene
     }
 
     @Override
-    public void onDisLike(Article news) {
+    public void onDisLike(Article article) {
         if (binding.swipeView.getChildCount() > 3) {
             viewModel.setCountryInput("us");
         }
