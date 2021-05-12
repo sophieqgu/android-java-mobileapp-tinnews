@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -44,6 +45,10 @@ public class SaveFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        SavedNewsAdapter savedNewsAdapter = new SavedNewsAdapter();
+        binding.recyclerView.setAdapter(savedNewsAdapter);
+        binding.recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
         NewsRepository repository = new NewsRepository(getContext());
         viewModel = new ViewModelProvider(this, new NewsViewModelFactory(repository)).get(SaveViewModel.class);
         viewModel.getAllSavedArticles()
@@ -52,6 +57,7 @@ public class SaveFragment extends Fragment {
                         savedArticles -> {
                             if (savedArticles != null) {
                                 Log.d("SaveFragment", savedArticles.toString());
+                                savedNewsAdapter.setArticles(savedArticles);
                             }
                         }
                 );
