@@ -16,7 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.SavedNewsViewHolder> {
+
+    interface OnClickListener {
+        void onClick(Article article);
+        void unLike(Article article);
+    }
+
     private List<Article> articles = new ArrayList<>();
+    private OnClickListener onClickListener;
 
     public void setArticles(List<Article> articles) {
         this.articles.clear();
@@ -24,6 +31,9 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
         notifyDataSetChanged();
     }
 
+    public void setOnClickListener(OnClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
 
     @NonNull
     @Override
@@ -42,6 +52,9 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
         } else {
             holder.icon.setImageResource(R.drawable.ic_favorite_border_black_24dp);
         }
+        holder.icon.setOnClickListener( v -> {
+            onClickListener.unLike(article);
+        });
     }
 
     @Override
