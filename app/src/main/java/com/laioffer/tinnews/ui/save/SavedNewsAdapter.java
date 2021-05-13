@@ -55,6 +55,9 @@ public class SavedNewsAdapter extends RecyclerView.Adapter<SavedNewsAdapter.Save
         holder.icon.setOnClickListener( v -> {
             onClickListener.unLike(article);
         });
+        holder.itemView.setOnClickListener( v -> {
+            onClickListener.onClick(article);
+        });
     }
 
     @Override

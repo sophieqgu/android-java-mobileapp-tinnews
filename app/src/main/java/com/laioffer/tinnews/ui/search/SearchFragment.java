@@ -51,7 +51,9 @@ public class SearchFragment extends Fragment {
 
             @Override
             public void onClick(Article article) {
-                NavHostFragment.findNavController(SearchFragment.this).navigate(R.id.action_title_search_to_detail);
+                SearchFragmentDirections.ActionTitleSearchToDetail actionTitleSearchToDetail = SearchFragmentDirections.actionTitleSearchToDetail();
+                actionTitleSearchToDetail.setArticle(article);
+                NavHostFragment.findNavController(SearchFragment.this).navigate(actionTitleSearchToDetail);
             }
         });
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(), 2);
@@ -97,6 +99,7 @@ public class SearchFragment extends Fragment {
                         isSuccess -> {
                             if (isSuccess) {
                                 Toast.makeText(requireActivity(), "Success", Toast.LENGTH_SHORT).show();
+                                //notify RecyclerView
                                 newsAdapter.notifyDataSetChanged();
                             } else {
                                 Toast.makeText(requireActivity(), "You might have liked before", Toast.LENGTH_SHORT).show();
