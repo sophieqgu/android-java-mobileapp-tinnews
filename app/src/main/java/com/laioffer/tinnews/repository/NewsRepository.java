@@ -81,7 +81,7 @@ public class NewsRepository {
 
     public void deleteSavedArticle(Article article) {
         AsyncTask.execute(
-                () -> database.dao().deleteArticle()
+                () -> database.dao().deleteArticle(article)
         );
     }
 
