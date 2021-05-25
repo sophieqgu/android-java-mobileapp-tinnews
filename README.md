@@ -28,7 +28,7 @@ Within the RecyclerView, the ```Adapter``` tells the Recycler when to create vie
 ### MVVM architectural pattern
 <img src="./demo/final-architecture.png" alt="MVVM pattern">
 
-The app is built with Android recommended architectural pattern MVVM (which stands for ```Model-View-ViewModel```). The ```View``` interacts with users' actions. The ```ViewModel```exposes streams of events to which the View can bind to, and retrieves data for the View to consume. And the ```Model``` stores POJO ("plain old Java object") that abstracts the data source.  
+The app is built with Android recommended architectural pattern MVVM (which stands for ```Model-View-ViewModel```) that champions the separation of concerns. The ```View``` interacts with users' actions. The ```ViewModel```exposes streams of events to which the View can bind to, and retrieves data for the View to consume. And the ```Model``` stores POJO ("plain old Java object") that abstracts the data source.  
 
 In this app, when ```HomeFragment``` is first created, it instantiates the ```HomeViewModel``` instance, which then instructs the ```NewsRepository``` to fetch news from the remote data source. The ```HomeViewModel``` also observes the swipe event binding to the view, and tells the ```NewsRepository``` to save liked articles in whenever the user swipes right. 
 
@@ -37,9 +37,20 @@ Similarly, in ```SaveFragment``` and ```SearchFragment```, respective ViewModels
 The ```LiveData``` structure is incorporated in ViewModels. LiveData is an observable data holder class, meaning that any changes in the data will notify the observer, and in this case, the fragments. 
 LiveData is also lifecycle-aware. It only updates fragments that are in an active lifecycle state, at the same time, automatically cleans up references after they're no longer needed. 
 
-While View holds a reference to the ViewModel, the ViewModel does not know anything about the View. The consumer knows about the producer, but the producer does not know, nor care about how the information is used.
+While ```View``` holds a reference to the ```ViewModel```, the ```ViewModel``` does not, and should not know anything about the ```View```. Just as the consumer knows about the producer, but the producer does not know, nor care about how the information is consumed.
 
-MVVM architectural pattern is a further champion of separation of concerns, while leveraging data bindings between the View and ViewModel. 
+### AsyncTask 
+Frequent network, disk and database access is a drain on the UI resources. Applications may stop responding to user inputs when it spends too much time on a query or computing task. For this reason, these heavy works should never be handled by the main thread, instead, they can be moved to a background thread and only send data back when the execution is complete. 
+
+The ```AsyncTask``` class enables proper and easy use of the UI thread. In the ```NewsRepostory```, for example, an AsyncTask instance is created to save or delete favorite articles. When the main thread is cancelled, the AsyncTask should also be cancelled to prevent memory leak. 
+
+
+### Navigation component 
+The Android Jetpack Navigation component is a collection of libraries, plugin and tooling for simplying workflow around navigation. It handles screen flow, back stack, fragment transactions and safeargs passing all in one place - the navigation graph. 
+
+The navigation graph is a xml file that centralizes all information about navigation. In addition to the ```<fragment>``` info, their available destinations are specified through the ```<action>``` tag, and allowable typesafe args, ```<argument>```. 
+
+The Navigation component easily supports the bottom navigation view of defined fragments as seen in this app. Furthermore, the ```Article```object is safely passed between  ```SaveFragment``` and ```SavedNewsDetailFragment``` to allow expanding on any news snippet. 
 
 ### Dependencies
 - News API: https://newsapi.org/
